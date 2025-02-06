@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
+    <PackageReference Include="OpenAI" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MachineLearningIntelligenceAPI.Common.Utils\MachineLearningIntelligenceAPI.Common.Utils.csproj" />
+    <ProjectReference Include="..\MachineLearningIntelligenceAPI.Common\MachineLearningIntelligenceAPI.Common.csproj" />
+    <ProjectReference Include="..\MachineLearningIntelligenceAPI.DomainModels\MachineLearningIntelligenceAPI.DomainModels.csproj" />
+    <ProjectReference Include="..\MachineLearningIntelligenceAPI.DTOs\MachineLearningIntelligenceAPI.DTOs.csproj" />
+  </ItemGroup>
+
+</Project>

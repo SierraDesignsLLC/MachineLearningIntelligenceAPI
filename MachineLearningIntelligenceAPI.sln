@@ -1,0 +1,73 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32819.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachineLearningIntelligenceAPI", "MachineLearningIntelligenceAPI\MachineLearningIntelligenceAPI.csproj", "{404B8263-BC23-49FC-ABE6-38403641C38E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DCFD2B14-8589-40B2-8F39-AEAE917290A7}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachineLearningIntelligenceAPI.DataAccess", "MachineLearningIntelligenceAPI.DataAccess\MachineLearningIntelligenceAPI.DataAccess.csproj", "{4AAFCB45-0BEB-45EF-A31B-4A7F44486273}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachineLearningIntelligenceAPI.DTOs", "MachineLearningIntelligenceAPI.DTOs\MachineLearningIntelligenceAPI.DTOs.csproj", "{C93EE3CD-34C9-4858-9005-0B00209D2E07}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachineLearningIntelligenceAPI.DomainModels", "MachineLearningIntelligenceAPI.DomainModels\MachineLearningIntelligenceAPI.DomainModels.csproj", "{76F8643E-C3F7-4CCD-AE54-A8A2FF6C7620}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachineLearningIntelligenceAPI.Common", "MachineLearningIntelligenceAPI.Common\MachineLearningIntelligenceAPI.Common.csproj", "{ABD8D51F-5044-4E5C-85CD-40CC611F492D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachineLearningIntelligenceAPI.Tests.IntegrationTests", "MachineLearningIntelligenceAPI.Tests.IntegrationTests\MachineLearningIntelligenceAPI.Tests.IntegrationTests.csproj", "{06DA036F-686C-4936-88CD-989F2CD837A5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachineLearningIntelligenceAPI.Tests.UnitTests", "MachineLearningIntelligenceAPI.Tests.UnitTests\MachineLearningIntelligenceAPI.Tests.UnitTests.csproj", "{7CD6B069-8F59-41A3-B2B7-B98B89E2145A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MachineLearningIntelligenceAPI.Common.Utils", "MachineLearningIntelligenceAPI.Common.Utils\MachineLearningIntelligenceAPI.Common.Utils.csproj", "{F325517A-F782-4F57-A8EF-16B0E41C1B1E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{404B8263-BC23-49FC-ABE6-38403641C38E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{404B8263-BC23-49FC-ABE6-38403641C38E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{404B8263-BC23-49FC-ABE6-38403641C38E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{404B8263-BC23-49FC-ABE6-38403641C38E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AAFCB45-0BEB-45EF-A31B-4A7F44486273}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AAFCB45-0BEB-45EF-A31B-4A7F44486273}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AAFCB45-0BEB-45EF-A31B-4A7F44486273}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AAFCB45-0BEB-45EF-A31B-4A7F44486273}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C93EE3CD-34C9-4858-9005-0B00209D2E07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C93EE3CD-34C9-4858-9005-0B00209D2E07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C93EE3CD-34C9-4858-9005-0B00209D2E07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C93EE3CD-34C9-4858-9005-0B00209D2E07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76F8643E-C3F7-4CCD-AE54-A8A2FF6C7620}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76F8643E-C3F7-4CCD-AE54-A8A2FF6C7620}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76F8643E-C3F7-4CCD-AE54-A8A2FF6C7620}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76F8643E-C3F7-4CCD-AE54-A8A2FF6C7620}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABD8D51F-5044-4E5C-85CD-40CC611F492D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABD8D51F-5044-4E5C-85CD-40CC611F492D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABD8D51F-5044-4E5C-85CD-40CC611F492D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABD8D51F-5044-4E5C-85CD-40CC611F492D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06DA036F-686C-4936-88CD-989F2CD837A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06DA036F-686C-4936-88CD-989F2CD837A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06DA036F-686C-4936-88CD-989F2CD837A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06DA036F-686C-4936-88CD-989F2CD837A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CD6B069-8F59-41A3-B2B7-B98B89E2145A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CD6B069-8F59-41A3-B2B7-B98B89E2145A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CD6B069-8F59-41A3-B2B7-B98B89E2145A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CD6B069-8F59-41A3-B2B7-B98B89E2145A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F325517A-F782-4F57-A8EF-16B0E41C1B1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F325517A-F782-4F57-A8EF-16B0E41C1B1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F325517A-F782-4F57-A8EF-16B0E41C1B1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F325517A-F782-4F57-A8EF-16B0E41C1B1E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2262D8BE-F17C-412F-A2F9-5925DB81BB1B}
+	EndGlobalSection
+EndGlobal

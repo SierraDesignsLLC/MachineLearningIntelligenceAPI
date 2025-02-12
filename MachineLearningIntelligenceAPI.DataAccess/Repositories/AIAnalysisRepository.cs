@@ -8,9 +8,9 @@ using MachineLearningIntelligenceAPI.DataAccess.Repositories.Interfaces;
 
 namespace MachineLearningIntelligenceAPI.DataAccess.Repositories
 {
-    public class AITranslationRepository : IAITranslationRepository
+    public class AIAnalysisRepository : IAIAnalysisRepository
     {
-        private readonly ILogger<AITranslationRepository> _logger;
+        private readonly ILogger<AIAnalysisRepository> _logger;
         private readonly HttpClient _httpClient;
         private static readonly string _openApiKey = Environment.GetEnvironmentVariable(ConnectionStrings.OpenApiSecret);
         private const string AIModel = AIModels.Gpt4oMini;   // TODO: make feature flag
@@ -41,7 +41,7 @@ namespace MachineLearningIntelligenceAPI.DataAccess.Repositories
                 """u8.ToArray())
         );
 
-        public AITranslationRepository(ILogger<AITranslationRepository> logger, IHttpClientFactory httpClientFactory)
+        public AIAnalysisRepository(ILogger<AIAnalysisRepository> logger, IHttpClientFactory httpClientFactory)
         {
             _logger = logger;
             _httpClient = httpClientFactory.CreateClient(ConnectionStrings.RedditService);
@@ -54,9 +54,9 @@ namespace MachineLearningIntelligenceAPI.DataAccess.Repositories
         }
 
         /// <summary>
-        /// Translate with AI with given input strings. Get response from AI as strings 1: 1
+        /// Analyze the passed in user engagements from the perspective of an expert social media manager
         /// </summary>
-        public async Task<string> TranslationWithAI(TranslationRequest conversation, string aiModel = null)
+        public async Task<List<string>> AnalyzeEngagements(AnalyzeRequest analysis, string aiModel = null)
         {
             ChatClient client = new(model: aiModel ?? AIModel, apiKey: _openApiKey);
 
@@ -64,9 +64,10 @@ namespace MachineLearningIntelligenceAPI.DataAccess.Repositories
             // Example of chat history with context retention (starting with a user message)
             var messages = new List<ChatMessage>();
 
-            messages.Add(new UserChatMessage($"Translate the following messages into {conversation.Language}, say nothing else but return the translations as a string array eg. [\"translation1\", \"translation2\"] and say nothing else"));
+            messages.Add(new UserChatMessage($"You are an expert social media manager, analyze the following data and create an analysis in {analysis.Culture}, return the analysis as a string array eg. [\"analysis1\", \"analysis2\"] and say nothing else"));
+            messages.Add(new UserChatMessage($"{analysis.Prompt}"));
 
-            foreach (var message in conversation.InputStrings)
+            foreach (var message in analysis.InputStrings)
             {
                 messages.Add(new UserChatMessage(message));
             }
@@ -92,7 +93,7 @@ namespace MachineLearningIntelligenceAPI.DataAccess.Repositories
 
             var response = ProcessUntilCompletion(client, messages, options);
 
-            return string.Join("", response.Last().Content.Select(t => t.Text));
+            return new List<string> { string.Join("", response.Last().Content.Select(t => t.Text)) };
         }
 
         private List<ChatMessage> ProcessUntilCompletion(ChatClient client, List<ChatMessage> messages, ChatCompletionOptions options)

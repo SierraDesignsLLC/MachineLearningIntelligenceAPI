@@ -1,5 +1,4 @@
-﻿using MachineLearningIntelligenceAPI.DataAccess.Repositories;
-using MachineLearningIntelligenceAPI.DataAccess.Repositories.Interfaces;
+﻿using MachineLearningIntelligenceAPI.DataAccess.Repositories.Interfaces;
 using MachineLearningIntelligenceAPI.DataAccess.Services.Interfaces;
 using MachineLearningIntelligenceAPI.DomainModels;
 using Microsoft.Extensions.Logging;
@@ -25,8 +24,12 @@ namespace MachineLearningIntelligenceAPI.DataAccess.Services
 
             try
             {
-                // TODO, make translation tool to standardize format. See the other repo
                 response = await _aiTranslationRepository.TranslationWithAI(conversation, aiModel);
+                // serialize the response into string array .length is string length
+                /*if(response.Length != conversation.InputStrings.Count)
+                {
+                    // throw new Exception(); what to do here???
+                }*/
             }
             catch (Exception ex)
             {

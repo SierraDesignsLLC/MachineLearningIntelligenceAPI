@@ -7,7 +7,7 @@ namespace MachineLearningIntelligenceAPI.DTOs
         public List<string> InputStrings { get; set; }
 
         // The language that the AI will translate to. Required.
-        public string Language { get; set; }
+        public string Culture { get; set; }
 
         #region Equality Methods
 
@@ -22,7 +22,7 @@ namespace MachineLearningIntelligenceAPI.DTOs
             if (!base.Equals(dto))
                 return false;
 
-            if (InputStrings != dto.InputStrings || Language.SequenceEqual(dto.Language))
+            if (InputStrings != dto.InputStrings || Culture.SequenceEqual(dto.Culture))
                 return false;
 
             return true;
@@ -34,7 +34,7 @@ namespace MachineLearningIntelligenceAPI.DTOs
         public override int GetHashCode()
         {
             int hashCode = base.GetHashCode();
-            hashCode = hashCode * 397 ^ (InputStrings != null ? InputStrings.GetHashCode() : 0) ^ (Language != null ? Language.GetHashCode() : 0);
+            hashCode = hashCode * 397 ^ (InputStrings != null ? InputStrings.GetHashCode() : 0) ^ (Culture != null ? Culture.GetHashCode() : 0);
             return hashCode;
         }
 

@@ -38,7 +38,7 @@ namespace MachineLearningIntelligenceAPI.Controllers
             {
                 // set up rate limit
                 //_httpClient.DefaultRequestHeaders.Add("RateLimit-WaitTimeMilliseconds", Constants.RedditPostWaitTimeMilliseconds.ToString());
-                if(request.InputStrings == null || request.InputStrings.Count == 0 || request.Language == null)
+                if(request.InputStrings == null || request.InputStrings.Count == 0 || request.Culture == null)
                 {
                     return BadRequest();
                 }

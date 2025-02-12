@@ -7,7 +7,7 @@ namespace MachineLearningIntelligenceAPI.DomainModels
         public List<string> InputStrings { get; set; }
 
         // The language that the AI will translate to. Required.
-        public string Language { get; set; }
+        public string Culture { get; set; }
 
         #region Equality Methods
         public override bool Equals(object obj)
@@ -18,7 +18,7 @@ namespace MachineLearningIntelligenceAPI.DomainModels
 
         public bool Equals(TranslationRequest model)
         {
-            if (InputStrings != model.InputStrings || Language != model.Language)
+            if (InputStrings != model.InputStrings || Culture != model.Culture)
                 return false;
 
             return true;
@@ -30,7 +30,7 @@ namespace MachineLearningIntelligenceAPI.DomainModels
         public override int GetHashCode()
         {
             int hashCode = base.GetHashCode();
-            hashCode = hashCode * 397 ^ InputStrings.GetHashCode() ^ Language.GetHashCode();
+            hashCode = hashCode * 397 ^ InputStrings.GetHashCode() ^ Culture.GetHashCode();
             return hashCode;
         }
         #endregion Equality Methods

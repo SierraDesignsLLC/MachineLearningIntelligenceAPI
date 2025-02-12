@@ -64,7 +64,7 @@ namespace MachineLearningIntelligenceAPI.DataAccess.Repositories
             // Example of chat history with context retention (starting with a user message)
             var messages = new List<ChatMessage>();
 
-            messages.Add(new UserChatMessage($"Translate the following messages into {conversation.Language}, say nothing else but return the translations as a string array eg. [\"translation1\", \"translation2\"] and say nothing else"));
+            messages.Add(new UserChatMessage($"Translate the following messages into {conversation.Culture}, say nothing else but return the translations as a string array eg. [\"translation1\", \"translation2\"] and say nothing else"));
 
             foreach (var message in conversation.InputStrings)
             {

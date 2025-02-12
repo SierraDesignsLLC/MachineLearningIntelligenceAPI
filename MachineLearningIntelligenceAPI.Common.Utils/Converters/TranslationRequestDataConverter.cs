@@ -13,7 +13,7 @@ namespace MachineLearningIntelligenceAPI.Common.Utils.Converters
             var model = new TranslationRequest
             {
                 InputStrings = dto.InputStrings,
-                Language = dto.Language,
+                Culture = dto.Culture,
             };
 
             return model;

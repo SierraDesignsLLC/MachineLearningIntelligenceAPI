@@ -64,12 +64,19 @@ namespace MachineLearningIntelligenceAPI.DataAccess.Repositories
             // Example of chat history with context retention (starting with a user message)
             var messages = new List<ChatMessage>();
 
-            messages.Add(new UserChatMessage($"Translate the following messages into {conversation.Culture}, say nothing else but return the translations as a string array eg. [\"translation1\", \"translation2\"] and say nothing else"));
+            messages.Add(new UserChatMessage($"Translate the following string array to {conversation.Culture}, " +
+                $"say nothing else but return the translations as a string array eg. [\"translationMessage1\", \"translationMessage2\"] and say nothing else, " +
+                $"each message is it's own index in the string array." +
+                $"If a message is empty \"\" then just return \"\" for it"));
 
-            foreach (var message in conversation.InputStrings)
+            var message = "[";
+            foreach (var msg in conversation.InputStrings)
             {
-                messages.Add(new UserChatMessage(message));
+                message += $"\"{msg}\", ";
             }
+            message += "]";
+
+            messages.Add(new UserChatMessage($"{message}"));
 
             // Start streaming chat completion
             Console.Write("[ASSISTANT]: ");

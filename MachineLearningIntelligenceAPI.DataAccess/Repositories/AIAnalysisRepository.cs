@@ -64,7 +64,10 @@ namespace MachineLearningIntelligenceAPI.DataAccess.Repositories
             // Example of chat history with context retention (starting with a user message)
             var messages = new List<ChatMessage>();
 
-            messages.Add(new UserChatMessage($"You are an expert social media manager, analyze the following data and create an analysis in {analysis.Culture}, return the analysis as a string array eg. [\"analysis1\", \"analysis2\"] and say nothing else"));
+            messages.Add(new UserChatMessage($"You are an expert social media manager, analyze the following data and create an analysis in {analysis.Culture}, " +
+                $"say nothing else but return the analyses as a string array eg. [\"analysis1\", \"analysis2\"] and say nothing else, " +
+                $"each analysis is it's own index in the string array." +
+                $"If a message is empty \"\" then just return \"\" for it. Additional details are as follows: "));
             messages.Add(new UserChatMessage($"{analysis.Prompt}"));
 
             foreach (var message in analysis.InputStrings)

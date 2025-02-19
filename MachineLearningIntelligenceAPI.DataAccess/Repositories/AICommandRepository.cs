@@ -1,46 +1,19 @@
 ﻿using MachineLearningIntelligenceAPI.Common.StringConstants;
 using MachineLearningIntelligenceAPI.Common;
-using MachineLearningIntelligenceAPI.DomainModels;
 using Microsoft.Extensions.Logging;
 using OpenAI.Chat;
-using System.Text.Json;
 using MachineLearningIntelligenceAPI.DataAccess.Repositories.Interfaces;
+using MachineLearningIntelligenceAPI.DomainModels;
 
 namespace MachineLearningIntelligenceAPI.DataAccess.Repositories
 {
-    public class AITranslationRepository : IAITranslationRepository
+    public class AICommandRepository : IAICommandRepository
     {
-        private readonly ILogger<AITranslationRepository> _logger;
+        private readonly ILogger<AICommandRepository> _logger;
         private static readonly string _openApiKey = Environment.GetEnvironmentVariable(ConnectionStrings.OpenApiSecret);
         private const string AIModel = AIModels.Gpt4oMini;   // TODO: make feature flag
 
-        private static readonly ChatTool getTranslationTool = ChatTool.CreateFunctionTool(
-            functionName: nameof(GetTranslation),
-            functionDescription: "Translate text from one language to another",
-            functionParameters: BinaryData.FromBytes(
-                """
-                {
-                    "type": "object",
-                    "properties": {
-                        "text": {
-                            "type": "string",
-                            "description": "The text to translate"
-                        },
-                        "sourceLanguage": {
-                            "type": "string",
-                            "description": "The language of the input text (e.g., 'en' for English)"
-                        },
-                        "targetLanguage": {
-                            "type": "string",
-                            "description": "The language to translate the text into (e.g., 'fr' for French)"
-                        }
-                    },
-                    "required": [ "text", "targetLanguage" ]
-                }
-                """u8.ToArray())
-        );
-
-        public AITranslationRepository(ILogger<AITranslationRepository> logger)
+        public AICommandRepository(ILogger<AICommandRepository> logger)
         {
             _logger = logger;
 
@@ -52,29 +25,26 @@ namespace MachineLearningIntelligenceAPI.DataAccess.Repositories
         }
 
         /// <summary>
-        /// Translate with AI with given input strings. Get response from AI as strings 1: 1
+        /// Respond to passed in command
         /// </summary>
-        public async Task<string> TranslationWithAI(TranslationRequest conversation, string aiModel = null)
+        public async Task<string> RespondToCommand(CommandRequest command, string aiModel = null)
         {
-            ChatClient client = new(model: aiModel ?? AIModel, apiKey: _openApiKey);
+            ChatClient client = new(model: aiModel ?? AIModel, apiKey: _openApiKey);  // TODO should this be a singleton?? maybe not? google? chatgpt
 
             // build the profile here for the user for context
             // Example of chat history with context retention (starting with a user message)
             var messages = new List<ChatMessage>();
 
-            messages.Add(new UserChatMessage($"Translate the following string array to {conversation.Culture}, " +
-                $"say nothing else but return the translations as a string array eg. [\"translationMessage1\", \"translationMessage2\"] and say nothing else, " +
-                $"each message is it's own index in the string array." +
-                $"If a message is empty \"\" then just return \"\" for it"));
-
-            var message = "[";
-            foreach (var msg in conversation.InputStrings)
+            var message = $"You are an expert social media manager, analyze the following command and craft a response ";
+            if (!string.IsNullOrEmpty(command.Culture))
             {
-                message += $"\"{msg}\", ";
+                message += $"in {command.Culture} ";
             }
-            message += "]";
-
-            messages.Add(new UserChatMessage($"{message}"));
+            message += $"say nothing but the response and say nothing else. " +
+                $"Additional details are as follows: ";
+            messages.Add(new UserChatMessage(message));
+            messages.Add(new UserChatMessage($"{command.Prompt}"));
+            messages.Add(new UserChatMessage(command.InputString));
 
             // Start streaming chat completion
             Console.Write("[ASSISTANT]: ");
@@ -90,17 +60,12 @@ namespace MachineLearningIntelligenceAPI.DataAccess.Repositories
                 }
             }
 
-            ChatCompletionOptions options = new()
-            {
-                Tools = { getTranslationTool },
-            };
-
-            var response = ProcessUntilCompletion(client, messages, options);
+            var response = ProcessUntilCompletion(client, messages);
 
             return string.Join("", response.Last().Content.Select(t => t.Text));
         }
 
-        private List<ChatMessage> ProcessUntilCompletion(ChatClient client, List<ChatMessage> messages, ChatCompletionOptions options)
+        private List<ChatMessage> ProcessUntilCompletion(ChatClient client, List<ChatMessage> messages, ChatCompletionOptions options = null)
         {
             var responseMessages = new List<ChatMessage>();
             bool requiresAction;
@@ -158,24 +123,6 @@ namespace MachineLearningIntelligenceAPI.DataAccess.Repositories
             {
                 switch (toolCall.FunctionName)
                 {
-                    case nameof(GetTranslation):
-                        {
-                            // The arguments that the model wants to use to call the function are specified as a
-                            // stringified JSON object based on the schema defined in the tool definition. Note that
-                            // the model may hallucinate arguments too. Consequently, it is important to do the
-                            // appropriate parsing and validation before calling the function.
-                            using JsonDocument argumentsJson = JsonDocument.Parse(toolCall.FunctionArguments);
-                            string text = argumentsJson.RootElement.GetProperty("text").GetString();
-                            string sourceLanguage = argumentsJson.RootElement.TryGetProperty("sourceLanguage", out JsonElement srcLang)
-                                ? srcLang.GetString()
-                                : null;
-                            string targetLanguage = argumentsJson.RootElement.GetProperty("targetLanguage").GetString();
-
-                            string translatedText = GetTranslation(text, sourceLanguage, targetLanguage);
-                            messages.Add(new ToolChatMessage(toolCall.Id, translatedText));
-                            responseMessages.Add(new ToolChatMessage(toolCall.Id, translatedText));
-                            break;
-                        }
 
                     default:
                         {
@@ -187,13 +134,6 @@ namespace MachineLearningIntelligenceAPI.DataAccess.Repositories
 
             requiresAction = true;
             return;
-        }
-
-        private static string GetTranslation(string text, string sourceLanguage, string targetLanguage)
-        {
-            // Call an external translation API or AI model
-            //return $"[Translated '{text}' from {sourceLanguage ?? "auto"} to {targetLanguage}]";
-            return $"[Translated '{text}' from {sourceLanguage ?? "auto"} to {targetLanguage}]";
         }
     }
 }

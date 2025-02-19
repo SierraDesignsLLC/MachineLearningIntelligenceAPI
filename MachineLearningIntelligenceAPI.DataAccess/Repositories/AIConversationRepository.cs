@@ -11,7 +11,6 @@ namespace MachineLearningIntelligenceAPI.DataAccess.Repositories
     public class AIConversationRepository : RepositoryBase, IAIConversationRepository
     {
         private readonly ILogger<AIConversationRepository> _logger;
-        private readonly HttpClient _httpClient;
         private static readonly string _openApiKey = Environment.GetEnvironmentVariable(ConnectionStrings.OpenApiSecret);
         private const string AIModel = AIModels.Gpt4oMini;   // TODO: make feature flag
 
@@ -47,10 +46,9 @@ namespace MachineLearningIntelligenceAPI.DataAccess.Repositories
                 """u8.ToArray())
         );
 
-        public AIConversationRepository(ILogger<AIConversationRepository> logger, IHttpClientFactory httpClientFactory)
+        public AIConversationRepository(ILogger<AIConversationRepository> logger)
         {
             _logger = logger;
-            _httpClient = httpClientFactory.CreateClient(ConnectionStrings.RedditService);
             
             if(_openApiKey == null)
             {

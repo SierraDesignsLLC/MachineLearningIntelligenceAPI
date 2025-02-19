@@ -11,7 +11,6 @@ namespace MachineLearningIntelligenceAPI.DataAccess.Repositories
     public class AIAnalysisRepository : IAIAnalysisRepository
     {
         private readonly ILogger<AIAnalysisRepository> _logger;
-        private readonly HttpClient _httpClient;
         private static readonly string _openApiKey = Environment.GetEnvironmentVariable(ConnectionStrings.OpenApiSecret);
         private const string AIModel = AIModels.Gpt4oMini;   // TODO: make feature flag
 
@@ -41,10 +40,9 @@ namespace MachineLearningIntelligenceAPI.DataAccess.Repositories
                 """u8.ToArray())
         );
 
-        public AIAnalysisRepository(ILogger<AIAnalysisRepository> logger, IHttpClientFactory httpClientFactory)
+        public AIAnalysisRepository(ILogger<AIAnalysisRepository> logger)
         {
             _logger = logger;
-            _httpClient = httpClientFactory.CreateClient(ConnectionStrings.RedditService);
 
             if (_openApiKey == null)
             {
@@ -58,7 +56,7 @@ namespace MachineLearningIntelligenceAPI.DataAccess.Repositories
         /// </summary>
         public async Task<List<string>> AnalyzeEngagements(AnalyzeRequest analysis, string aiModel = null)
         {
-            ChatClient client = new(model: aiModel ?? AIModel, apiKey: _openApiKey);
+            ChatClient client = new(model: aiModel ?? AIModel, apiKey: _openApiKey); // TODO should this be a singleton?? maybe not? google? chatgpt
 
             // build the profile here for the user for context
             // Example of chat history with context retention (starting with a user message)

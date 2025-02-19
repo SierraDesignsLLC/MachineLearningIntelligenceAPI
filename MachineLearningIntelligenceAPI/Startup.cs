@@ -64,6 +64,7 @@ namespace MachineLearningIntelligenceAPI
             services.AddScoped<RequestSessionInformationMiddleware>();
 
             services.AddTransient<IAIAnalysisService, AIAnalysisService>();
+            services.AddTransient<IAICommandService, AICommandService>();
             services.AddTransient<IAIConversationService, AIConversationService>();
             services.AddTransient<IAITranslationService, AITranslationService>();
             services.AddTransient<IAuthService, AuthService>();
@@ -73,6 +74,7 @@ namespace MachineLearningIntelligenceAPI
             services.AddTransient<IAccountAutomationDataDao, AccountAutomationDataDao>();
 
             services.AddTransient<IAIAnalysisRepository, AIAnalysisRepository>();
+            services.AddTransient<IAICommandRepository, AICommandRepository>();
             services.AddTransient<IAIConversationRepository, AIConversationRepository>();
             services.AddTransient<IAITranslationRepository, AITranslationRepository>();
             services.AddTransient<IMachineLearningIntelligenceAPIRepository, MachineLearningIntelligenceAPIRepository>();

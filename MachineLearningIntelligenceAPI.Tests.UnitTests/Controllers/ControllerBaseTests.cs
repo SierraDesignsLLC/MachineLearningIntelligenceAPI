@@ -48,9 +48,9 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests.Controllers
             {
                 var message = field.GetValue(null).ToString();
                 var result = _controller.GenerateHttpResponseFromException(new Exception(message));
-                Assert.IsNotNull(result);
-                Assert.AreEqual((int)HttpStatusCode.BadRequest, result.StatusCode);
-                Assert.AreEqual(message, result.Value);
+                Assert.That(result, Is.Not.Null);
+                Assert.That(result.StatusCode, Is.EqualTo((int)HttpStatusCode.BadRequest));
+                Assert.That(result.Value, Is.EqualTo(message));
             }
 
             fields = typeof(UnauthorizedString).GetFields();
@@ -58,9 +58,9 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests.Controllers
             {
                 var message = field.GetValue(null).ToString();
                 var result = _controller.GenerateHttpResponseFromException(new Exception(message));
-                Assert.IsNotNull(result);
-                Assert.AreEqual((int)HttpStatusCode.Unauthorized, result.StatusCode);
-                Assert.AreEqual(message, result.Value);
+                Assert.That(result, Is.Not.Null);
+                Assert.That(result.StatusCode, Is.EqualTo((int)HttpStatusCode.Unauthorized));
+                Assert.That(result.Value, Is.EqualTo(message));
             }
 
             fields = typeof(ForbiddenString).GetFields();
@@ -68,9 +68,9 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests.Controllers
             {
                 var message = field.GetValue(null).ToString();
                 var result = _controller.GenerateHttpResponseFromException(new Exception(message));
-                Assert.IsNotNull(result);
-                Assert.AreEqual((int)HttpStatusCode.Forbidden, result.StatusCode);
-                Assert.AreEqual(message, result.Value);
+                Assert.That(result, Is.Not.Null);
+                Assert.That(result.StatusCode, Is.EqualTo((int)HttpStatusCode.Forbidden));
+                Assert.That(result.Value, Is.EqualTo(message));
             }
 
             fields = typeof(NotFoundString).GetFields();
@@ -78,9 +78,9 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests.Controllers
             {
                 var message = field.GetValue(null).ToString();
                 var result = _controller.GenerateHttpResponseFromException(new Exception(message));
-                Assert.IsNotNull(result);
-                Assert.AreEqual((int)HttpStatusCode.NotFound, result.StatusCode);
-                Assert.AreEqual(message, result.Value);
+                Assert.That(result, Is.Not.Null);
+                Assert.That(result.StatusCode, Is.EqualTo((int)HttpStatusCode.NotFound));
+                Assert.That(result.Value, Is.EqualTo(message));
             }
 
             fields = typeof(TooManyRequestsString).GetFields();
@@ -88,14 +88,14 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests.Controllers
             {
                 var message = field.GetValue(null).ToString();
                 var result = _controller.GenerateHttpResponseFromException(new Exception(message));
-                Assert.IsNotNull(result);
-                Assert.AreEqual((int)HttpStatusCode.TooManyRequests, result.StatusCode);
-                Assert.AreEqual(message, result.Value);
+                Assert.That(result, Is.Not.Null);
+                Assert.That(result.StatusCode, Is.EqualTo((int)HttpStatusCode.TooManyRequests));
+                Assert.That(result.Value, Is.EqualTo(message));
             }
 
             var result500 = _controller.GenerateHttpResponseFromException(new Exception(""));
-            Assert.IsNotNull(result500);
-            Assert.AreEqual((int)HttpStatusCode.InternalServerError, result500.StatusCode);
+            Assert.That(result500, Is.Not.Null);
+            Assert.That(result500.StatusCode, Is.EqualTo((int)HttpStatusCode.InternalServerError));
         }
 
         [TestCase(IACStrings.RedditService)]
@@ -153,7 +153,7 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests.Controllers
             var requiredPermissions = new List<(string permissionType, string permissionName)> { ("todosetup", IACStrings.RedditService), };
 
             var ex = Assert.ThrowsAsync<Exception>(() => _controller.AuthorizePermissions(requiredPermissions));
-            Assert.AreEqual(ForbiddenString.InfrastructureForbidden, ex.Message);
+            Assert.That( ex.Message, Is.EqualTo(ForbiddenString.InfrastructureForbidden));
         }
 
         [TestCase(FRPStrings.RedditPosting)]
@@ -174,7 +174,7 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests.Controllers
             var requiredPermissions = new List<(string permissionType, string permissionName)> { ("todosetup", FRPStrings.RedditPosting), };
 
             var ex = Assert.ThrowsAsync<Exception>(() => _controller.AuthorizePermissions(requiredPermissions));
-            Assert.AreEqual(ForbiddenString.FeatureForbidden, ex.Message);
+            Assert.That( ex.Message, Is.EqualTo(ForbiddenString.FeatureForbidden));
         }
 
         [Test]
@@ -189,7 +189,7 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests.Controllers
             var requiredPermissions = new List<(string permissionType, string permissionName)> { ("todosetup", IACStrings.RedditService), };
 
             var ex = Assert.ThrowsAsync<Exception>(() => _controller.AuthorizePermissions(requiredPermissions));
-            Assert.AreEqual(ForbiddenString.InfrastructureForbidden, ex.Message);
+            Assert.That( ex.Message, Is.EqualTo(ForbiddenString.InfrastructureForbidden));
         }
 
         [Test]
@@ -204,7 +204,7 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests.Controllers
             var requiredPermissions = new List<(string permissionType, string permissionName)> { ("todosetup", FRPStrings.RedditPosting), };
 
             var ex = Assert.ThrowsAsync<Exception>(() => _controller.AuthorizePermissions(requiredPermissions));
-            Assert.AreEqual(ForbiddenString.InfrastructureForbidden, ex.Message);
+            Assert.That( ex.Message, Is.EqualTo(ForbiddenString.InfrastructureForbidden));
         }
     }
 }

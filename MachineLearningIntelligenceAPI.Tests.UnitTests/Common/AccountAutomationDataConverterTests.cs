@@ -31,12 +31,12 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests.Common
 
             var dto = AccountAutomationDataConverter.ModelToV1Dto(model);
 
-            Assert.IsNotNull(dto);
-            Assert.AreEqual(accountAutomationId.ToString(), dto.Id);
-            Assert.AreEqual(AccountAutomationTypeEnum.Reddit.ToString(), dto.AutomationType);
-            Assert.AreEqual(AccountAutomationStatusEnum.Active.ToString(), dto.AutomationStatus);
-            Assert.AreEqual(username, dto.DisplayName);
-            Assert.AreEqual(culture, dto.Culture);
+            Assert.That(dto, Is.Not.Null);
+            Assert.That( dto.Id, Is.EqualTo(accountAutomationId.ToString()));
+            Assert.That( dto.AutomationType, Is.EqualTo(AccountAutomationTypeEnum.Reddit.ToString()));
+            Assert.That( dto.AutomationStatus, Is.EqualTo(AccountAutomationStatusEnum.Active.ToString()));
+            Assert.That( dto.DisplayName, Is.EqualTo(username));
+            Assert.That( dto.Culture, Is.EqualTo(culture));
         }
 
         [Test]
@@ -88,12 +88,12 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests.Common
 
             for (int i = 0; i < list.Count || i < dtos.Count; i++)
             {
-                Assert.IsNotNull(dtos.ElementAt(i));
-                Assert.AreEqual(accountAutomationId.ToString(), dtos.ElementAt(i).Id);
-                Assert.AreEqual(AccountAutomationTypeEnum.Reddit.ToString(), dtos.ElementAt(i).AutomationType);
-                Assert.AreEqual(AccountAutomationStatusEnum.Active.ToString(), dtos.ElementAt(i).AutomationStatus);
-                Assert.AreEqual(username, dtos.ElementAt(i).DisplayName);
-                Assert.AreEqual(culture, dtos.ElementAt(i).Culture);
+                Assert.That(dtos.ElementAt(i), Is.Not.Null);
+                Assert.That(dtos.ElementAt(i).Id, Is.EqualTo(accountAutomationId.ToString()));
+                Assert.That(dtos.ElementAt(i).AutomationType, Is.EqualTo(AccountAutomationTypeEnum.Reddit.ToString()));
+                Assert.That(dtos.ElementAt(i).AutomationStatus, Is.EqualTo(AccountAutomationStatusEnum.Active.ToString()));
+                Assert.That(dtos.ElementAt(i).DisplayName, Is.EqualTo(username));
+                Assert.That(dtos.ElementAt(i).Culture, Is.EqualTo(culture));
             }
         }
 
@@ -143,12 +143,12 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests.Common
 
             for (int i = 0; i < list.Count || i < dtos.Count; i++)
             {
-                Assert.IsNotNull(dtos.ElementAt(i));
-                Assert.AreEqual(accountAutomationId.ToString(), dtos.ElementAt(i).Id);
-                Assert.AreEqual(AccountAutomationTypeEnum.Reddit.ToString(), dtos.ElementAt(i).AutomationType);
-                Assert.AreEqual(AccountAutomationStatusEnum.Active.ToString(), dtos.ElementAt(i).AutomationStatus);
-                Assert.AreEqual(username, dtos.ElementAt(i).DisplayName);
-                Assert.AreEqual(culture, dtos.ElementAt(i).Culture);
+                Assert.That(dtos.ElementAt(i), Is.Not.Null);
+                Assert.That(dtos.ElementAt(i).Id, Is.EqualTo(accountAutomationId.ToString()));
+                Assert.That(dtos.ElementAt(i).AutomationType, Is.EqualTo(AccountAutomationTypeEnum.Reddit.ToString()));
+                Assert.That(dtos.ElementAt(i).AutomationStatus, Is.EqualTo(AccountAutomationStatusEnum.Active.ToString()));
+                Assert.That(dtos.ElementAt(i).DisplayName, Is.EqualTo(username));
+                Assert.That(dtos.ElementAt(i).Culture, Is.EqualTo(culture));
             }
         }
     }

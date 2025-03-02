@@ -40,9 +40,9 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests
         public void GetTokenStringsTest(string token, string userAccountId, string sessionToken)
         {
             var result = _middleware.GetTokenStrings(token);
-            Assert.IsNotNull(result);
-            Assert.AreEqual(userAccountId, result[0]);
-            Assert.AreEqual(sessionToken, result[1]);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result[0], Is.EqualTo(userAccountId));
+            Assert.That(result[1], Is.EqualTo(sessionToken));
         }
 
         [TestCase(".ea7be982-44c0-4f92-bf69-245dd3527b95.b93b0b78-c067-4387-9a7c-7cdae59adf21")]
@@ -52,7 +52,7 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests
         public void GetTokenStringsFailTest(string token)
         {
             var ex = Assert.Throws<Exception>(() => _middleware.GetTokenStrings(token));
-            Assert.AreEqual(UnauthorizedString.UserAccountSessionUnauthorized, ex.Message);
+            Assert.That(ex.Message, Is.EqualTo(UnauthorizedString.UserAccountSessionUnauthorized));
         }
 
         [TestCase(AuthPolicyStrings.ActiveSession, "")]
@@ -73,10 +73,10 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests
             var context = new DefaultHttpContext();
             context.Request.Headers.Add("Authorization", fullToken);
             var ex = Assert.ThrowsAsync<Exception>(() => _middleware.SetRequestSessionInformation(context.Request));
-            Assert.AreEqual(UnauthorizedString.UserAccountSessionUnauthorized, ex.Message);
-            Assert.AreEqual(null, RequestSessionInformation.RequestUserId);
-            Assert.AreEqual(null, RequestSessionInformation.Authentication);
-            Assert.AreEqual(false, RequestSessionInformation.HasValidatedAuthentication);
+            Assert.That(ex.Message, Is.EqualTo(UnauthorizedString.UserAccountSessionUnauthorized));
+            Assert.That(RequestSessionInformation.RequestUserId, Is.EqualTo(null));
+            Assert.That(RequestSessionInformation.Authentication, Is.EqualTo(null));
+            Assert.That(RequestSessionInformation.HasValidatedAuthentication, Is.EqualTo(false));
         }
 
         [TestCase(AuthPolicyStrings.ActiveSession, "ea7be982-44c0-4f92-bf69-245dd3527b95", "b93b0b78-c067-4387-9a7c-7cdae59adf21")]
@@ -97,9 +97,9 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests
             var context = new DefaultHttpContext();
             context.Request.Headers.Add("Authorization", fullToken);
             await _middleware.SetRequestSessionInformation(context.Request);
-            Assert.AreEqual(Constants.SystemUserAccountGuid, RequestSessionInformation.RequestUserId);
-            Assert.AreEqual(null, RequestSessionInformation.Authentication);
-            Assert.AreEqual(null, RequestSessionInformation.Permissions);
+            Assert.That(RequestSessionInformation.RequestUserId, Is.EqualTo(null));
+            Assert.That(RequestSessionInformation.Authentication, Is.EqualTo(null));
+            Assert.That(RequestSessionInformation.Permissions, Is.EqualTo(null));
         }
     }
 }

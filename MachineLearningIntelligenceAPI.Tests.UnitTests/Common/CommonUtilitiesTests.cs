@@ -15,7 +15,7 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests.Common
         public async Task IsTemporaryId(string id, bool expectedReturn)
         {
             var result = CommonUtilities.IsTemporaryId(id);
-            Assert.AreEqual(expectedReturn, result);
+            Assert.That(result, Is.EqualTo(expectedReturn));
         }
 
         [TestCase(null, false, false, false)]
@@ -54,7 +54,7 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests.Common
         public void IsValidAccountAutomationJobStatusTest(int? status, bool allowNull, bool allowInProgress, bool expectedResult)
         {
             var result = CommonUtilities.IsValidAccountAutomationJobStatus(status, allowNull, allowInProgress);
-            Assert.AreEqual(expectedResult, result);
+            Assert.That(result, Is.EqualTo(expectedResult));
         }
 
         [TestCase(null, false, false, false)]
@@ -97,7 +97,7 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests.Common
         public void IsValidEngagmentJobStatusTest(int? status, bool allowNull, bool allowInProgress, bool expectedResult)
         {
             var result = CommonUtilities.IsValidEngagmentJobStatus(status, allowNull, allowInProgress);
-            Assert.AreEqual(expectedResult, result);
+            Assert.That(result, Is.EqualTo(expectedResult));
         }
     }
 }

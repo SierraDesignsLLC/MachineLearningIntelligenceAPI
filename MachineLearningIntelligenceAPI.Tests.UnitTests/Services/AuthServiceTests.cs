@@ -30,7 +30,7 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests.Services
         public void GetSessionFromSessionTokenMalformedTokenTest(string sessionToken)
         {
             //var ex = Assert.ThrowsAsync<Exception>(() => _service.GetSessionFromSessionToken(sessionToken));
-            //Assert.AreEqual(UnauthorizedString.UserAccountSessionUnauthorized, ex.Message);
+            //Assert.That( ex.Message, Is.EqualTo(UnauthorizedString.UserAccountSessionUnauthorized));
         }
 
         [Test]
@@ -85,7 +85,7 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests.Services
             _mockEncryptionService.Setup(mock => mock.BcryptIsPasswordValid(userAccountLogin.PasswordEncrypted, hashedPass)).Returns(true);
 
             var ex = Assert.ThrowsAsync<Exception>(() => _service.SignInUserAccountAndCreateSession(userAccountLogin));
-            Assert.AreEqual(UnauthorizedString.UserAccountSessionUnauthorized, ex.Message);
+            Assert.That( ex.Message, Is.EqualTo(UnauthorizedString.UserAccountSessionUnauthorized));
             _mockLogger.Verify(logger => logger.Log(
                 It.Is<LogLevel>(logLevel => logLevel == LogLevel.Error),
                 It.Is<EventId>(eventId => eventId.Id == 0),
@@ -107,7 +107,7 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests.Services
             _mockEncryptionService.Setup(mock => mock.BcryptIsPasswordValid(userAccountLogin.PasswordEncrypted, hashedPass)).Returns(false);
 
             var ex = Assert.ThrowsAsync<Exception>(() => _service.SignInUserAccountAndCreateSession(userAccountLogin));
-            Assert.AreEqual(UnauthorizedString.UserAccountUnauthorized, ex.Message);
+            Assert.That( ex.Message, Is.EqualTo(UnauthorizedString.UserAccountUnauthorized));
         }
 
         [Test]
@@ -119,7 +119,7 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests.Services
             _mockUserAccountSessionService.Setup(mock => mock.SignInUserAccountFromIdTokenAndUpdateExpiration(userAccountId, new Guid(sessionToken))).ReturnsAsync(returnedUserAccountSession);
 
             var result = await _service.AuthenticateUserAccountWithSessionToken(userAccountId, new Guid(sessionToken));
-            Assert.IsNotNull(result);
+            Assert.That(result, Is.Not.Null);
         }
 
         [Test]
@@ -130,7 +130,7 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests.Services
             _mockUserAccountSessionService.Setup(mock => mock.SignInUserAccountFromIdTokenAndUpdateExpiration(userAccountId, new Guid(sessionToken))).ReturnsAsync((UserAccountSession)null);
 
             var ex = Assert.ThrowsAsync<Exception>(() => _service.AuthenticateUserAccountWithSessionToken(userAccountId, new Guid(sessionToken)));
-            Assert.AreEqual(UnauthorizedString.UserAccountSessionUnauthorized, ex.Message);
+            Assert.That( ex.Message, Is.EqualTo(UnauthorizedString.UserAccountSessionUnauthorized));
         }
 
         [TestCase("token")]
@@ -141,7 +141,7 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests.Services
         public void RevokeSessionFromSessionTokenMalformedTokenTest(string sessionToken)
         {
             var ex = Assert.ThrowsAsync<Exception>(() => _service.RevokeSessionFromSessionToken(sessionToken));
-            Assert.AreEqual(UnauthorizedString.UserAccountSessionUnauthorized, ex.Message);
+            Assert.That( ex.Message, Is.EqualTo(UnauthorizedString.UserAccountSessionUnauthorized));
         }
 
         [Test]

@@ -27,12 +27,12 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests.Common
 
             var model = RedditUserAccountDataConverter.RequestToModel(dto);
 
-            Assert.IsNotNull(model);
-            Assert.AreEqual(accountAutomationId, model.AccountAutomationId);
-            Assert.AreEqual(clientId.ToString(), model.ClientId);
-            Assert.AreEqual(username, model.Name);
-            Assert.AreEqual(token, model.RefreshToken);
-            Assert.AreEqual(AccountAutomationStatusEnum.Active, model.Status);
+            Assert.That(model, Is.Not.Null);
+            Assert.That( model.AccountAutomationId, Is.EqualTo(accountAutomationId));
+            Assert.That( model.ClientId, Is.EqualTo(clientId.ToString()));
+            Assert.That( model.Name, Is.EqualTo(username));
+            Assert.That( model.RefreshToken, Is.EqualTo(token));
+            Assert.That( model.Status, Is.EqualTo(AccountAutomationStatusEnum.Active));
         }
 
         [Test]
@@ -54,13 +54,13 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests.Common
 
             var dto = RedditUserAccountDataConverter.ModelToV1Dto(model);
 
-            Assert.IsNotNull(dto);
-            Assert.AreEqual(accountAutomationId, dto.Id);
-            Assert.AreEqual(clientId.ToString(), dto.ClientId);
-            Assert.AreEqual(AccountAutomationTypeEnum.Reddit.ToString(), dto.AutomationType);
-            Assert.AreEqual(username, dto.DisplayName);
-            Assert.AreEqual(token, dto.RefreshToken);
-            Assert.AreEqual(true, dto.Verified);
+            Assert.That(dto, Is.Not.Null);
+            Assert.That( dto.Id, Is.EqualTo(accountAutomationId));
+            Assert.That( dto.ClientId, Is.EqualTo(clientId.ToString()));
+            Assert.That( dto.AutomationType, Is.EqualTo(AccountAutomationTypeEnum.Reddit.ToString()));
+            Assert.That( dto.DisplayName, Is.EqualTo(username));
+            Assert.That( dto.RefreshToken, Is.EqualTo(token));
+            Assert.That( dto.Verified, Is.EqualTo(true));
         }
     }
 }

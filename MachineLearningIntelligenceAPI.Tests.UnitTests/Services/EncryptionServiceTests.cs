@@ -32,13 +32,13 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests.Services
             if (unhashedPass == null)
             {
                 var ex = Assert.Throws<ArgumentNullException>(() => _service.BcryptEncryptPassword(unhashedPass));
-                Assert.AreEqual("Value cannot be null. (Parameter 'inputKey')", ex.Message);
+                Assert.That(ex.Message, Is.EqualTo("Value cannot be null. (Parameter 'inputKey')"));
                 Assert.Pass();
                 return;
             }
             var result = _service.BcryptEncryptPassword(unhashedPass);
 
-            Assert.AreNotEqual(result, unhashedPass);
+            Assert.That(unhashedPass, Is.Not.EqualTo(result));
         }
 
         [TestCase("", "$2a$11$0ddEthscZdOQnMnzmpUcZuSaIyjvKxJ/OfIcNkc6G8CLGb3sWy34m", false)]
@@ -56,7 +56,7 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests.Services
         {
             var result = _service.BcryptIsPasswordValid(password, hash);
 
-            Assert.AreEqual(validPassword, result);
+            Assert.That(result, Is.EqualTo(validPassword));
         }
 
         [TestCase(32, 44)]
@@ -65,7 +65,7 @@ namespace MachineLearningIntelligenceAPI.Tests.UnitTests.Services
         {
             var result = _service.GenerateSaltWithLength(length);
 
-            Assert.AreEqual(expectedLength, result.Length);
+            Assert.That(result.Length, Is.EqualTo(expectedLength));
         }
     }
 }
